@@ -575,7 +575,9 @@ topic_status = <未出題 / 出題中 / 完了 / スキップ>
 
 ### 【調査依頼テンプレート一覧】
 
-田中さんは以下のテンプレートをベースに調査依頼を作成してください。
+田中さんは `selected_system_scenario` に応じて、以下の対応テンプレートをベースに調査依頼を作成してください。
+
+#### SQL生成ツール シナリオの調査依頼
 
 | # | 機能名 | 調査対象ファイル |
 |:--|:--|:--|
@@ -584,6 +586,18 @@ topic_status = <未出題 / 出題中 / 完了 / スキップ>
 | 3 | クエリ実行履歴管理機能の追加 | `SqlGenerationService`, `SchemaRepository` |
 | 4 | `BOOLEAN` 型カラムのサポート追加 | `ColumnType`, `SqlGenerationService#toConditionSql` |
 | 5 | CSV 形式でのスキーマ出力機能の追加 | `SchemaService`, `InMemorySchemaRepository` |
+
+#### タスク管理 シナリオの調査依頼
+
+- **難易度1（基本問題）** は `QueryHistoryApp/queryhistory/` を、**難易度2（応用問題）** は `TaskBoardCLI/taskboard/` を調査対象とすること
+
+| # | 機能名 | 調査対象ファイル |
+|:--|:--|:--|
+| 1 | 履歴の最大件数超過時の自動削除機能 | `QueryHistoryManager#add`, `QueryHistoryManager#remove` |
+| 2 | テーブル名の許可リスト検証機能 | `AllowedTableRegistry`, `QueryRecord` |
+| 3 | タスク予算超過時の例外スロー機能 | `TaskService`, `BudgetOverflowException` |
+| 4 | 締切切れタスクの一括抽出機能 | `TaskService#getTasksInRange`, `DeadlineExceededException` |
+| 5 | タスクレポートのテキストブロック出力機能 | `TaskReportService#generateReport` |
 
 ### 【レビュー対象コードが未提出の場合】
 
@@ -602,7 +616,7 @@ topic_status = <未出題 / 出題中 / 完了 / スキップ>
 
 > **🔀 どちらのモードで始めますか？**
 >    - [ ] 📝 **問題演習モード** — 以下の5点を設定して問題を解く
->    - [ ] 🔍 **レビューモード** — 「レビューモード開始」と入力 → 田中シニアが `sqlCreater-app` の調査依頼を出します
+>    - [ ] 🔍 **レビューモード** — 「レビューモード開始」と入力 → 田中シニアが選択したシナリオのコードベースに対する調査依頼を出します（SQL生成ツール: `sqlCreater-app` / タスク管理: `QueryHistoryApp` / `TaskBoardCLI`）
 
 ---
 
@@ -628,7 +642,7 @@ topic_status = <未出題 / 出題中 / 完了 / スキップ>
 >
 > **5️⃣ 作りたいシステムのシナリオはどれですか？**
 >    - [ ] ECサイト
->    - [ ] タスク管理
+>    - [ ] タスク管理（`QueryHistoryApp` / `TaskBoardCLI` のコードを素材として使用）
 >    - [ ] 在庫管理
 >    - [ ] 予約管理
 >    - [ ] 家計簿
